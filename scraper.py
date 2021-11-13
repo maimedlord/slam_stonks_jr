@@ -39,7 +39,7 @@ def scrape_marketwatch():
             temp_string = search(".*>(.*)<.*", newline_delimited[i])
             one_stock_list.append(temp_string.group(1))
 
-            top_10_stocks.update({counter: one_stock_list})
+            top_10_stocks.update({str(counter): one_stock_list})
             counter += 1
             # end if
 
