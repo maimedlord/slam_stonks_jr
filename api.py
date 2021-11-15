@@ -1,13 +1,13 @@
 # api.py
 
 
-# from time import sleep
+from time import sleep
 import pandas as pd
 from pytrends.request import TrendReq
 # import tweepy
-import nltk
-from nltk.corpus import stopwords
-from textblob import Word, TextBlob
+# import nltk
+# from nltk.corpus import stopwords
+# from textblob import Word, TextBlob
 import re
 
 

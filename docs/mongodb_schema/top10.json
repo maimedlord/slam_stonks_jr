@@ -1,0 +1,4 @@
+db.top10.insertOne({
+  "date": new Date(),
+  "top10array": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
+})
