@@ -17,8 +17,10 @@ def store_scrape_marketwatch():
     db_collection = db["top10"]
     db_collection.insert_one(temp_storage[0])
     db_collection = db["scrape_marketwatch"]
-    db_collection.insert_many(temp_storage[1])
-
+    for x in temp_storage[1]:
+        temp_id = str(list(x.keys())[0])
+        temp_obj = dict(list(x.values())[0])
+        db_collection.replace_one({"_id": temp_id}, temp_obj, upsert=True)
 
 # # LEFT OFF HERE
 # def store_pytrends():

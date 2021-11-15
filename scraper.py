@@ -44,12 +44,14 @@ def scrape_marketwatch():
             float_shorted = temp_string.group(1)
 
             top10_obj_list.append({
-                "_id": ticker,
-                "date": now_date,
-                "name": name,
-                "price": float(price),
-                "short_interest": short_interest,
-                "float_shorted": float_shorted
+                ticker: {
+                    "_id": ticker,
+                    "date": now_date,
+                    "name": name,
+                    "price": float(price),
+                    "short_interest": short_interest,
+                    "float_shorted": float_shorted
+                }
             })
             counter += 1
             # end if
