@@ -7,20 +7,16 @@ import datetime
 def scrape_marketwatch():
     # used to sync dates for individual tickers and the list of tickers
     now_date = datetime.datetime.today().replace(microsecond=0)
-    # requests will use .get() to pull from marketwatch.com
+    # pull data from marketwatch
     requests_get_short_html = get('http://www.marketwatch.com/tools/screener/short-interest')
-    # r.raise_for_status() # will return error if http isn't up
 
     newline_delimited = requests_get_short_html.text.split('\n')
     top10_list = []
     top10_obj_list = []
-
-    # the content we want starts a bit after line 675:
-    i = 675
+    i = 675     # the content we want starts a bit after line 675
     counter = 0
     while i < len(newline_delimited) and counter < 10:
         none_or_match = search("<div class=\"cell__content\">[A-Z]{3,5}</div>", newline_delimited[i])
-
         if none_or_match is not None:
             # grabs ticker:
             temp_string = search(".*>(.*)<.*", none_or_match.group(0))  # pulls substring from match object
@@ -50,7 +46,8 @@ def scrape_marketwatch():
                     "name": name,
                     "price": float(price),
                     "short_interest": short_interest,
-                    "float_shorted": float_shorted
+                    "float_shorted": float_shorted,
+                    "pytrend": {}
                 }
             })
             counter += 1

@@ -1,0 +1,9 @@
+db.stocks.insertOne({
+  "_id": "XXXXX",
+  "date": new Date(),
+  "name": "test",
+  "price": 0.0,
+  "short_interest": "12345",
+  "float_shorted": "66.60%",
+  "pytrend": {}
+})

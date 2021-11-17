@@ -11,7 +11,6 @@ from pytrends.request import TrendReq
 import re
 
 
-# AVERAGER()
 # Accepts a ticker dictionary that has hours per day and a corresponding value.
 # These hour values are averaged for the day and returned in a dictionary.
 def averager(ticker_dictionary):
@@ -33,21 +32,19 @@ def averager(ticker_dictionary):
             counter_for_avg = 1
         if len(ticker_dictionary) == 0:
             dictionary_to_return.update({current_date: counter / counter_for_avg})
-    # print(dictionary_to_return)
-    return dictionary_to_return
-# End of Averager
 
-# GOOGLE_TRENDS_NORMALIZED()
+    return dictionary_to_return
+# End of averager
+
 # pytrends, pandas (dataframe, timeframe)
 # Returns a nested dictionary containing data needed for
 # comparing the relative frequency of tickers compared to each other.
 # Very helpful: https://towardsdatascience.com/telling-stories-with-google-trends-using-pytrends-in-python-a11e5b8a177
-def pytrends_normalized(top_10_stocks):
+def pytrend_normalized(top_10_stocks):
     # Only need to load this one time for following operations:
     pytrends = TrendReq()
     master_df = pd.DataFrame()
     counter = 1
-
     for x in top_10_stocks:
         if x != top_10_stocks[-1]:
             kw_list = [x, top_10_stocks[-1]]
@@ -63,7 +60,6 @@ def pytrends_normalized(top_10_stocks):
 
     nested_dictionary = {}
     tickers_plus_normalizers_list = list(master_df.columns)
-
     for x in tickers_plus_normalizers_list:
         # prepping variables for the coming while loop that uses them. We need to get the current_date before we can
         # cycle through the dictionary. current_date is critical to successful execution.
@@ -114,18 +110,15 @@ def pytrends_normalized(top_10_stocks):
     return nested_dictionary
 # END google_trends_normalized
 
-
-# GOOGLE_TRENDS()
 # pytrends, pandas
 # This does what normalized does but for one ticker only.
-def google_trends(ticker):
+def pytrend_single(ticker):
     # Only need to load this one time for following operations:
     pytrends = TrendReq()
 
     kw_list = [ticker]
     pytrends.build_payload(kw_list, cat=0, timeframe='now 7-d', geo='US', gprop='')
     interest_over_time_df = pytrends.interest_over_time()
-    # print(interest_over_time_df.head())        # useful for error testing
 
     # prepping variables for the coming while loop that uses them.
     # We need to get the current_date before we can cycle through the dictionary.
@@ -135,7 +128,7 @@ def google_trends(ticker):
     # print(interest_over_time_df.to_string())
     return averager(ticker_only_dictionary)
 # END google_trends
-#
+
 # # TWITTER()
 # # tweepy, pandas, re, nltk, textblob
 # # Gathers tweets for a ticker and then performs sentiment analysis on the tweets with nltk and textblob.
