@@ -4,7 +4,7 @@
 from pymongo import MongoClient, DESCENDING
 import datetime
 from scraper import scrape_marketwatch
-from api import pytrend_single, pytrend_normalized
+from api import pytrend_single, pytrend_normalized, twitter
 
 
 database_name = "ssjr"
@@ -45,7 +45,17 @@ def store_pytrend_normalized():
     tempobj = pytrend_normalized(top10_array)
     db_collection.insert_one({"date": now_date, "pytrend_normalized": tempobj})
 
+def store_twitter():
+    db_client = MongoClient()
+    db = db_client[database_name]
+    db_collection = db["top10"]
+    mongodb_obj = db_collection.find_one(sort=[('_id', DESCENDING)])
+    top10_array = mongodb_obj.get("top10array")
+    for x in top10_array:
+        print(twitter(x))
+
 if __name__ == '__main__':
     #store_pytrend()
     #store_stocks()
-    store_pytrend_normalized()
+    #store_pytrend_normalized()
+    store_twitter()
