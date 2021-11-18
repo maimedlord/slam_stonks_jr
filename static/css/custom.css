@@ -1,0 +1,12 @@
+.header {
+    width: 100%;
+    height: 350px;
+    background-color: purple;
+}
+.my_container {
+    width: 100%;
+    background-color: purple;
+    margin: auto;
+    text-align: center;
+    z-index: -2;
+}
