@@ -42,8 +42,8 @@ def store_pytrend_normalized():
     top10_array = mongodb_obj.get("top10array")
     db_collection = db["pytrend_normalized"]
     now_date = datetime.datetime.today().replace(microsecond=0)
-    tempobj = pytrend_normalized(top10_array)
-    db_collection.insert_one({"date": now_date, "pytrend_normalized": tempobj})
+    temp_obj = pytrend_normalized(top10_array)
+    db_collection.insert_one({"date": now_date, "pytrend_normalized": temp_obj})
 
 def store_twitter():
     db_client = MongoClient()
@@ -51,11 +51,12 @@ def store_twitter():
     db_collection = db["top10"]
     mongodb_obj = db_collection.find_one(sort=[('_id', DESCENDING)])
     top10_array = mongodb_obj.get("top10array")
-    for x in top10_array:
+    for x in top10_array: ######################################################################################
         print(twitter(x))
 
 if __name__ == '__main__':
-    #store_pytrend()
-    #store_stocks()
-    #store_pytrend_normalized()
-    store_twitter()
+    # store_stocks()
+    # store_pytrend()
+    # store_pytrend_normalized()
+    # store_twitter()
+    pass
