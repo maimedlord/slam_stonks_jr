@@ -14,9 +14,9 @@ def index():
     return render_template('index.html', top10_array=top10_array, pnorm_obj=pnorm_obj, tickers=tickers, dates=dates)
 
 
-@app.route('/<string: ticker>')
-def ticker():
-    return render_template('ticker.html')
+# @app.route('/<string: ticker>')
+# def ticker():
+#     return render_template('ticker.html')
 
 
 if __name__ == '__main__':
