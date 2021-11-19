@@ -26,23 +26,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js" integrity="sha512-GMGzUEevhWh8Tc/njS0bDpwgxdCJLQBWG3Z2Ct+JGOpVnEmjvNx6ts4v6A2XJf1HOrtOsfhv3hBKpK9kE5z8AQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-    <div class="header">
+    <div class="the_background">
+        <div class="header border_bottom_radius">
         <div class="ssjr_top">
             <img src="{{ url_for('static', filename='images/ssjr_top.png') }}" alt="ssjr_top.png">
         </div>
         <div class="container">
             <div class="row">
-                <div class="twelve columns text_align_center">
+                <div class="one column">.</div>
+                <div class="ten columns text_align_center">
                     <img src="{{ url_for('static', filename='images/ssjrheader.png') }}" alt="ssjrheader.png">
+                </div>
+                <div class="one column">
+                    <img src="{{ url_for('static', filename='images/github_icon.png') }}" alt="github">
                 </div>
             </div>
         </div>
-    </div>
-    {% block main %}{% endblock %}
-    <div class="container">
-        <div class="row">
-            <div class="twelve columns text_align_center">
-                Slam Stonks Jr. © 2021
+        </div>
+        {% block main %}{% endblock %}
+        <div class="container">
+            <div class="row">
+                <div class="twelve columns text_align_center">
+                    Slam Stonks Jr. © 2021
+                </div>
             </div>
         </div>
     </div>
