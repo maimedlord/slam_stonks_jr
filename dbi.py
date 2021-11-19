@@ -15,7 +15,17 @@ def get_pytrend_normalized():
     db_collection = db["pytrend_normalized"]
     mongodb_obj = db_collection.find_one(sort=[('_id', DESCENDING)])
     temp_object = mongodb_obj.get("pytrend_normalized")
-    return temp_object
+    tickers = list(temp_object.keys())
+    temp_object2 = {}
+    dates = []
+    for x in tickers:
+        dates = list(temp_object.get(x).keys())
+
+    #values = list(temp_object.values().values())
+    print(tickers)
+    print(dates)
+    #print(values)
+    pass
 
 def get_top10():
     db_client = MongoClient()
