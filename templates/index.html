@@ -1,28 +1,11 @@
 {% extends "base.html" %}
 {% block title %}<title>Slam Stonks Jr.</title>{% endblock %}
 {% block main %}
-    <div class="ticker_nav">
-        {% for item in top10_array %}
-            <div class="ticker_nav_cell">
-                <a href="javascript:"><button>{{ item }}</button></a>
-            </div>
-        {% endfor %}
-    </div>
-    <div class="ticker_nav">
-        <div class="ticker_nav_cell">
-            <h4><a href="javascript:"><button>COMPARE ALL</button></a></h4>
-            </div>
-    </div>
-    <div class="index_main">
-        <div class="container bg_white border_top_radius">
-            <div class="row">
-                <div class="twelve columns" style="min-height: 1000px;padding: 10px">
-                    <canvas id="pnorm"></canvas>
-                </div>
+        <div class="row">
+            <div class="twelve columns" style="padding: 10px">
+                <canvas id="pnorm"></canvas>
             </div>
         </div>
-    </div>
-    <!--<script src="{{ url_for('static', filename='javascript/pnorm.js') }}" defer></script>-->
     <script>
         const ctx = document.getElementById('pnorm');
         const pnorm = new Chart(ctx, {

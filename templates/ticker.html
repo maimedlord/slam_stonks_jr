@@ -1,4 +1,23 @@
 {% extends "base.html" %}
 {% block title %}<title>Slam Stonks Jr.</title>{% endblock %}
 {% block main %}
+    <div class="row">
+        <div class="twelve columns text_align_center">
+            <h2>{{ ticker }}</h2>
+        </div>
+    </div>
+    <div class="row text_align_center">
+        <div class="three columns">
+            <h5>Company: </h5><h6>{{ stock_obj["name"] }}</h6>
+        </div>
+        <div class="three columns">
+            <h5>Price: </h5><h6>${{ stock_obj["price"] }}</h6>
+        </div>
+        <div class="three columns">
+            <h5>Short Interest: </h5><h6>{{ stock_obj["short_interest"] }}</h6>
+        </div>
+        <div class="three columns">
+            <h5>Float Shorted: </h5><h6>{{ stock_obj["float_shorted"] }}</h6>
+        </div>
+    </div>
 {% endblock %}

@@ -17,6 +17,13 @@ def get_pytrend_normalized():
     pnorm_obj = mongodb_obj.get("pytrend_normalized")
     return pnorm_obj
 
+def get_stock(ticker):
+    db_client = MongoClient()
+    db = db_client[database_name]
+    db_collection = db["stocks"]
+    stock_obj = db_collection.find_one({'_id': ticker})
+    return(stock_obj)
+
 def get_top10():
     db_client = MongoClient()
     db = db_client[database_name]
@@ -77,5 +84,6 @@ if __name__ == '__main__':
     # store_pytrend()
     # store_pytrend_normalized()
     # store_twitter()
-    get_pytrend_normalized()
+    #get_pytrend_normalized()
+    get_stock("CRTX")
     pass

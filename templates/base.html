@@ -25,9 +25,8 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js" integrity="sha512-GMGzUEevhWh8Tc/njS0bDpwgxdCJLQBWG3Z2Ct+JGOpVnEmjvNx6ts4v6A2XJf1HOrtOsfhv3hBKpK9kE5z8AQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
-<body>
-    <div class="the_background">
-        <div class="header border_bottom_radius">
+<body class="the_background">
+    <div class="header border_bottom_radius">
         <div class="ssjr_top">
             <img src="{{ url_for('static', filename='images/ssjr_top.png') }}" alt="ssjr_top.png">
         </div>
@@ -42,15 +41,32 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="ticker_nav">
+        {% for ticker in top10_array %}
+            <div class="ticker_nav_cell">
+                <a href="/{{ ticker }}"><button>{{ ticker }}</button></a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="ticker_nav">
+        <div class="ticker_nav_cell">
+            <h4><a href="/"><button>COMPARE ALL</button></a></h4>
+            </div>
+    </div>
+        <div class="index_main">
+            <div class="container bg_white border_top_radius">
+                {% block main %}{% endblock %}
+            </div>
         </div>
-        {% block main %}{% endblock %}
-        <div class="container">
+        <div class="container bg_white border_bottom_radius">
             <div class="row">
                 <div class="twelve columns text_align_center">
                     Slam Stonks Jr. © 2021
                 </div>
             </div>
         </div>
-    </div>
+        <div class="below_footer">.
+        </div>
 </body>
 </html>
