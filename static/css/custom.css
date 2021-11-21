@@ -19,6 +19,9 @@
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
 }
+.display_none {
+    display: none;
+}
 .header {
     width: 100%;
     min-height: 277px;

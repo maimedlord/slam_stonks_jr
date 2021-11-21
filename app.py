@@ -18,7 +18,13 @@ def index():
 def ticker_page(ticker):
     top10_array = get_top10()
     stock_obj = get_stock(ticker)
-    return render_template('ticker.html', top10_array=top10_array, ticker=ticker, stock_obj=stock_obj)
+    name = stock_obj["name"]
+    price = stock_obj["price"]
+    short_interest =  stock_obj["short_interest"]
+    float_shorted =  stock_obj["float_shorted"]
+    dates = list(stock_obj["pytrend"].keys())
+    values = list(stock_obj["pytrend"].values())
+    return render_template('ticker.html', top10_array=top10_array, ticker=ticker, name=name, price=price, short_interest=short_interest, float_shorted=float_shorted, dates=dates, values=values)
 
 
 if __name__ == '__main__':

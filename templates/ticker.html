@@ -7,17 +7,125 @@
         </div>
     </div>
     <div class="row text_align_center">
+        <div class="six columns">
+            <a href='javascript:;' onclick="show_google_trend()">Google Trend</a>
+        </div>
+        <div class="six columns">
+            <a href='javascript:;' onclick="show_price_trend()">Price Trend</a>
+        </div>
+    </div>
+    <div class="row text_align_center">
         <div class="three columns">
-            <h5>Company: </h5><h6>{{ stock_obj["name"] }}</h6>
+            <h5>Company: </h5><h6>{{ name }}</h6>
         </div>
         <div class="three columns">
-            <h5>Price: </h5><h6>${{ stock_obj["price"] }}</h6>
+            <h5>Price: </h5><h6>${{ price }}</h6>
         </div>
         <div class="three columns">
-            <h5>Short Interest: </h5><h6>{{ stock_obj["short_interest"] }}</h6>
+            <h5>Short Interest: </h5><h6>{{ short_interest }}</h6>
         </div>
         <div class="three columns">
-            <h5>Float Shorted: </h5><h6>{{ stock_obj["float_shorted"] }}</h6>
+            <h5>Float Shorted: </h5><h6>{{ float_shorted }}</h6>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns" style="padding: 10px">
+            <div id="google_trend">
+                <canvas id="pytrend_single"></canvas>
+                <script>
+                    const ctx = document.getElementById('pytrend_single');
+                    const pytrend_single = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: [{% for x in dates %}"{{x}}",{% endfor %}],
+                            datasets: [
+                                {
+                                    label: "{{ ticker }}",
+                                    data: [{
+                                        x: "{{ dates[0] }}",
+                                        y: {{ values[0] }}
+                                    }, {
+                                        x: "{{ dates[1] }}",
+                                        y: {{ values[1] }}
+                                    }, {
+                                        x: "{{ dates[2] }}",
+                                        y: {{ values[2] }}
+                                    }, {
+                                        x: "{{ dates[3] }}",
+                                        y: {{ values[3] }}
+                                    }, {
+                                        x: "{{ dates[4] }}",
+                                        y: {{ values[4] }}
+                                    }, {
+                                        x: "{{ dates[5] }}",
+                                        y: {{ values[5] }}
+                                    }, {
+                                        x: "{{ dates[6] }}",
+                                        y: {{ values[6] }}
+                                    }, {x: "{{ dates[7] }}", y: {{ values[7] }}}],
+                                    showLine: true,
+                                    fill: false,
+                                    borderColor: 'rgba(255, 0, 0, 1)',
+                                    lineTension: 0,
+                                },
+                            ],
+                        },
+                        options: {
+                            tooltips: {
+                                mode: 'index',
+                                intersect: true,
+                            },
+                            legend: {
+                                labels: {
+                                    fontColor: 'white' //set your desired color
+                                }
+                            },
+                            hover: {
+                                mode: 'nearest',
+                                intersect: true
+                            },
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        autoSkip: false,
+                                        beginAtZero: true,
+                                        stepSize: 20,
+                                        suggestedMax: 100,
+                                        fontColor: 'white',
+                                    }
+                                }],
+                                xAxes: [{
+                                    ticks: {
+                                        autoSkip: false,
+                                        fontColor: 'white',
+                                    }
+                                }]
+                            },
+                        }
+                    });
+                </script>
+            </div>
+            <div style="display: none" id="price_trend">
+                PRICE TREND<p>asdfasdfasdfasdf
+            </div>
+            <script>
+                function show_google_trend() {
+                    var gt = document.getElementById("google_trend");
+                    var pt = document.getElementById("price_trend");
+                    if (gt.style.display === "none") {
+                        gt.style.display = "block";
+                        pt.style.display = "none";
+                    }
+                }
+                function show_price_trend() {
+                    var gt = document.getElementById("google_trend");
+                    var pt = document.getElementById("price_trend");
+                    if (pt.style.display === "none") {
+                        pt.style.display = "block";
+                        gt.style.display = "none";
+                    }
+                }
+            </script>
         </div>
     </div>
 {% endblock %}
