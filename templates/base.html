@@ -1,72 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <!-- Basic Page Needs –––––––––––––––––––––––––––––––––– -->
-  <meta charset="utf-8">
-    {% block title %}{% endblock %}
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <head>
+        <!-- Basic Page Needs –––––––––––––––––––––––––––––––––– -->
+      <meta charset="utf-8">
+        {% block title %}{% endblock %}
+      <meta name="description" content="">
+      <meta name="author" content="">
 
-  <!-- Mobile Specific Metas –––––––––––––––––––––––––––-–––– -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- Mobile Specific Metas –––––––––––––––––––––––––––-–––– -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- CSS –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+      <!-- CSS –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
 
-    <!-- Favicon  ––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.ico') }}">
+        <!-- Favicon  ––––––––––––––––––––––––––––––––––––––––––––– -->
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.ico') }}">
 
-    <!-- Google  ––––––––––––––––––––––––––––––––––––––––––––– -->
-    <!--<meta name="google-site-verification" content="xxxxxx" />-->
+        <!-- Google  ––––––––––––––––––––––––––––––––––––––––––––– -->
+        <!--<meta name="google-site-verification" content="xxxxxx" />-->
 
-    <!-- Chart.js library via CDN
-    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js" integrity="sha512-GMGzUEevhWh8Tc/njS0bDpwgxdCJLQBWG3Z2Ct+JGOpVnEmjvNx6ts4v6A2XJf1HOrtOsfhv3hBKpK9kE5z8AQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-</head>
-<body class="the_background">
-    <div class="header border_bottom_radius">
-        <div class="ssjr_top">
-            <img src="{{ url_for('static', filename='images/ssjr_top.png') }}" alt="ssjr_top.png">
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="one column">.</div>
-                <div class="ten columns text_align_center">
-                    <img src="{{ url_for('static', filename='images/ssjrheader.png') }}" alt="ssjrheader.png">
-                </div>
-                <div class="one column">
-                    <a href="https://github.com/maimedlord"><img src="{{ url_for('static', filename='images/github_icon.png') }}" alt="github"></a>
+        <!-- Chart.js library via CDN
+        –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js" integrity="sha512-GMGzUEevhWh8Tc/njS0bDpwgxdCJLQBWG3Z2Ct+JGOpVnEmjvNx6ts4v6A2XJf1HOrtOsfhv3hBKpK9kE5z8AQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    </head>
+    <body class="the_background">
+        <div class="header border_bottom_radius">
+            <div class="ssjr_top">
+                <img src="{{ url_for('static', filename='images/ssjr_top.png') }}" alt="ssjr_top.png">
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="one column">.</div>
+                    <div class="ten columns text_align_center">
+                        <img src="{{ url_for('static', filename='images/ssjrheader.png') }}" alt="ssjrheader.png">
+                    </div>
+                    <div class="one column">
+                        <a href="https://github.com/maimedlord"><img src="{{ url_for('static', filename='images/github_icon.png') }}" alt="github"></a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="ticker_nav">
-        {% for ticker in top10_array %}
+        <div class="ticker_nav">
+            {% for ticker in top10_array %}
+                <div class="ticker_nav_cell">
+                    <a href="/{{ ticker }}"><button>{{ ticker }}</button></a>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="ticker_nav">
             <div class="ticker_nav_cell">
-                <a href="/{{ ticker }}"><button>{{ ticker }}</button></a>
-            </div>
-        {% endfor %}
-    </div>
-    <div class="ticker_nav">
-        <div class="ticker_nav_cell">
-            <h4><a href="/"><button>COMPARE ALL</button></a></h4>
-            </div>
-    </div>
-        <div class="index_main">
-            <div class="container bg_white border_top_radius">
-                {% block main %}{% endblock %}
-            </div>
+                <h4><a href="/"><button>COMPARE ALL</button></a></h4>
+                </div>
         </div>
-        <div class="container bg_white border_bottom_radius">
-            <div class="row">
-                <div class="twelve columns text_align_center">
-                    Slam Stonks Jr. © 2021
+            <div class="index_main">
+                <div class="container bg_white border_top_radius">
+                    {% block main %}{% endblock %}
                 </div>
             </div>
-        </div>
-        <div class="below_footer">.
-        </div>
-</body>
+            <div class="container bg_white border_bottom_radius">
+                <div class="row">
+                    <div class="twelve columns text_align_center">
+                        Slam Stonks Jr. © 2021
+                    </div>
+                </div>
+            </div>
+            <div class="below_footer">.
+            </div>
+    </body>
 </html>
