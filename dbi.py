@@ -1,11 +1,13 @@
 # Alex Haas
 
 
-from pymongo import MongoClient, DESCENDING
+
 import datetime
+from time import sleep
+from pymongo import MongoClient, DESCENDING
+import yfinance as yf
 from scraper import scrape_marketwatch
 from api import pytrend_single, pytrend_normalized, twitter
-import yfinance as yf
 
 
 database_name = "ssjr"
@@ -32,9 +34,24 @@ def get_top10():
     mongodb_obj = db_collection.find_one(sort=[('_id', DESCENDING)])
     return mongodb_obj.get("top10array")
 
-def store_price_hist(ticker):
-    yf_obj = yf.Ticker(ticker)
-    print(yf_obj.history(period="1y"))# "yf_dataframe"
+def store_price_hist():
+    top10_array = get_top10()
+    db_client = MongoClient()
+    db = db_client[database_name]
+    db_collection = db["stocks"]
+    for ticker in top10_array:
+        yf_obj = yf.Ticker(ticker)
+        history = yf_obj.history(period="1y")#.reset_index(inplace=True) # includes Reset Index for Pandas DF
+        history.reset_index(inplace=True)
+        history = history.to_dict("list")
+        #print(history)
+        db_collection.update_one({"_id": ticker}, {"$set": {"yf_hist_dataframe": history}})
+        # print(type(history))
+        # print(history)
+        # history = history.to_dict("yf_hist_dataframe")
+        # db_collection.update_one({"_id": ticker}, {"$set": history})
+        sleep(1)
+
     pass
 
 def store_stocks():
@@ -92,5 +109,5 @@ if __name__ == '__main__':
     # store_twitter()
     #get_pytrend_normalized()
     #get_stock("CRTX")
-    store_price_hist("CRTX")
+    store_price_hist()
     pass
