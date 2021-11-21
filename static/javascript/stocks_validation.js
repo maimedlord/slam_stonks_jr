@@ -8,7 +8,8 @@
       'price',
       'short_interest',
       'float_shorted',
-      'pytrend'
+      'pytrend',
+      'yf_hist_dataframe'
     ],
     properties: {
       _id: {
@@ -48,6 +49,10 @@
       pytrend: {
         bsonType: 'object',
         description: 'required: pytrend data'
+      },
+      yf_hist_dataframe: {
+        bsonType: 'object',
+        description: 'required: yfinance pandas DataFrame object'
       }
     }
   }

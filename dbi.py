@@ -34,7 +34,7 @@ def get_top10():
 
 def store_price_hist(ticker):
     yf_obj = yf.Ticker(ticker)
-    print(yf_obj.history(period="1y"))
+    print(yf_obj.history(period="1y"))# "yf_dataframe"
     pass
 
 def store_stocks():

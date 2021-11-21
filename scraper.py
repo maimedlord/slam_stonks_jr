@@ -48,7 +48,7 @@ def scrape_marketwatch():
                     "short_interest": short_interest,
                     "float_shorted": float_shorted,
                     "pytrend": {},
-                    "yf_dataframe": {}
+                    "yf_hist_dataframe": {}
                 }
             })
             counter += 1
