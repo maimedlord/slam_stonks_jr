@@ -5,6 +5,7 @@ from pymongo import MongoClient, DESCENDING
 import datetime
 from scraper import scrape_marketwatch
 from api import pytrend_single, pytrend_normalized, twitter
+import yfinance as yf
 
 
 database_name = "ssjr"
@@ -30,6 +31,11 @@ def get_top10():
     db_collection = db["top10"]
     mongodb_obj = db_collection.find_one(sort=[('_id', DESCENDING)])
     return mongodb_obj.get("top10array")
+
+def store_price_hist(ticker):
+    yf_obj = yf.Ticker(ticker)
+    print(yf_obj.history(period="1y"))
+    pass
 
 def store_stocks():
     temp_storage = scrape_marketwatch()
@@ -85,5 +91,6 @@ if __name__ == '__main__':
     # store_pytrend_normalized()
     # store_twitter()
     #get_pytrend_normalized()
-    get_stock("CRTX")
+    #get_stock("CRTX")
+    store_price_hist("CRTX")
     pass
