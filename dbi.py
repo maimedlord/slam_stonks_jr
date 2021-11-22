@@ -34,25 +34,26 @@ def get_top10():
     mongodb_obj = db_collection.find_one(sort=[('_id', DESCENDING)])
     return mongodb_obj.get("top10array")
 
-def store_price_hist():
+def get_yfhistdf(ticker):
+    db_client = MongoClient()
+    db = db_client[database_name]
+    db_collection = db["stocks"]
+    mongodb_obj = db_collection.find_one({'_id': ticker})
+    stock_info_obj = mongodb_obj.get("yf_hist_dataframe")
+    return stock_info_obj
+
+def store_yfhistdf():
     top10_array = get_top10()
     db_client = MongoClient()
     db = db_client[database_name]
     db_collection = db["stocks"]
     for ticker in top10_array:
         yf_obj = yf.Ticker(ticker)
-        history = yf_obj.history(period="1y")#.reset_index(inplace=True) # includes Reset Index for Pandas DF
-        history.reset_index(inplace=True)
+        history = yf_obj.history(period="1y")
+        history.reset_index(inplace=True)       #.reset_index(inplace=True) # includes Reset Index for Pandas DF
         history = history.to_dict("list")
-        #print(history)
         db_collection.update_one({"_id": ticker}, {"$set": {"yf_hist_dataframe": history}})
-        # print(type(history))
-        # print(history)
-        # history = history.to_dict("yf_hist_dataframe")
-        # db_collection.update_one({"_id": ticker}, {"$set": history})
         sleep(1)
-
-    pass
 
 def store_stocks():
     temp_storage = scrape_marketwatch()
@@ -109,5 +110,6 @@ if __name__ == '__main__':
     # store_twitter()
     #get_pytrend_normalized()
     #get_stock("CRTX")
-    store_price_hist()
+    #store_yfhistdf()
+    get_yfhistdf("CRTX")
     pass
