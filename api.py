@@ -11,6 +11,11 @@ from textblob import Word, TextBlob
 import re
 
 
+def api_loop():
+    nltk.download('stopwords')
+    nltk.download('wordnet')
+
+
 # Accepts a ticker dictionary that has hours per day and a corresponding value.
 # These hour values are averaged for the day and returned in a dictionary.
 def averager(ticker_dictionary):
@@ -134,7 +139,7 @@ def pytrend_single(ticker):
 # Gathers tweets for a ticker and then performs sentiment analysis on the tweets with nltk and textblob.
 # Data is returned in a dictionary.
 def twitter(ticker):
-    # login stuff:
+    # login stuff for Tweepy:
     consumer_key = 'Dvkp7foIvb2EMqxFoXCqcD4YZ'
     consumer_secret = 'gs0w56HCcSwuWJEyVKXL0ywv9ibE1R98ZomPUyDSbtl7kDy4sv'
     access_token = '1371241350746755074-zbpTUM7DqzTxie9tJ5VOvbVYSZ1CAI'
@@ -142,7 +147,6 @@ def twitter(ticker):
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth, wait_on_rate_limit=True)
-
     # error checking
     try:
         api.verify_credentials()
@@ -150,9 +154,6 @@ def twitter(ticker):
     except:
         print("Error during authentication\n\n\n")
 
-    # Pre-loop prep (keep preprocess_tweets below stop_words:
-    nltk.download('stopwords')
-    nltk.download('wordnet')
     stop_words = stopwords.words('english')
 
     # Removes stop words from each tweet as well as lemmatizing the words too
@@ -180,7 +181,7 @@ def twitter(ticker):
     df['polarity'] = df['Processed Tweet'].apply(lambda x: TextBlob(x).sentiment[0])
     df['subjectivity'] = df['Processed Tweet'].apply(lambda x: TextBlob(x).sentiment[1])
     df.drop(df.columns[[0, 1, 2]], axis=1, inplace=True)
-    ticker_dict = {ticker: [df['polarity'].mean(), df['subjectivity'].mean()]}
+    # sentiment = (df['polarity'].mean(), df['subjectivity'].mean())
 
-    return ticker_dict
+    return (df['polarity'].mean(), df['subjectivity'].mean())
 # END twitter

@@ -9,7 +9,8 @@
       'short_interest',
       'float_shorted',
       'pytrend',
-      'yf_hist_dataframe'
+      'yf_hist_dataframe',
+      'twitter_sentiment'
     ],
     properties: {
       _id: {
@@ -53,6 +54,24 @@
       yf_hist_dataframe: {
         bsonType: 'object',
         description: 'required: yfinance pandas DataFrame object'
+      },
+      twitter_sentiment: {
+        bsonType: 'object',
+        description: 'required: Twitter sentiment analysis',
+        required: [
+          'polarity',
+          'subjectivity'
+        ],
+        properties: {
+          polarity: {
+            bsonType: 'array',
+            description: 'required: polarity array'
+          },
+          subjectivity: {
+            bsonType: 'array',
+            description: 'required: subjectivity array'
+          }
+        }
       }
     }
   }
