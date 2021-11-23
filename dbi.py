@@ -41,6 +41,13 @@ def get_top10():
     mongodb_obj = db_collection.find_one(sort=[('_id', DESCENDING)])
     return mongodb_obj.get("top10array")
 
+def get_ts_arrays(ticker):
+    db_client = MongoClient()
+    db = db_client[database_name]
+    db_collection = db["stocks"]
+    stock_obj = db_collection.find_one({'_id': ticker})
+    return stock_obj["twitter_sentiment"]["date"], stock_obj["twitter_sentiment"]["polarity"], stock_obj["twitter_sentiment"]["subjectivity"]
+
 def get_yfhistdf(ticker):
     db_client = MongoClient()
     db = db_client[database_name]
@@ -103,6 +110,21 @@ def store_pytrend_normalized(now_date):
 
 # NOT COMPLETE #########################################################################################################
 def store_twitter(date_rn):
+    # login stuff for Tweepy:
+    consumer_key = 'Dvkp7foIvb2EMqxFoXCqcD4YZ'
+    consumer_secret = 'gs0w56HCcSwuWJEyVKXL0ywv9ibE1R98ZomPUyDSbtl7kDy4sv'
+    access_token = '1371241350746755074-zbpTUM7DqzTxie9tJ5VOvbVYSZ1CAI'
+    access_token_secret = '9EazuwZG4XEnBR5eInRBqE1BzpEV72iJLoF8OzGzZBBnT'
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth, wait_on_rate_limit=True)
+    # error checking
+    try:
+        api.verify_credentials()
+        print("Authentication OK")
+    except:
+        print("Error during authentication\n\n\n")
+    ####################################################################################################################
     db_client = MongoClient()
     db = db_client[database_name]
     db_collection = db["top10"]
@@ -111,7 +133,7 @@ def store_twitter(date_rn):
     db_collection = db["stocks"]
     temp_tuple = ()
     for x in top10_array:
-        temp_tuple = twitter(x)
+        temp_tuple = twitter(api, x)
         db_collection.update_one({'_id': x}, {"$push": {"twitter_sentiment.date": date_rn, "twitter_sentiment.polarity": temp_tuple[0], "twitter_sentiment.subjectivity": temp_tuple[1]}}, upsert=True)
         print(str(temp_tuple[0]) + " yo " + str(temp_tuple[1]))
         sleep(30)

@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from dbi import get_top10, get_pytrend_normalized, get_stock, get_yfhistdf
+from dbi import get_top10, get_pytrend_normalized, get_stock, get_ts_arrays, get_yfhistdf
 import datetime
 
 
@@ -22,7 +22,10 @@ def index():
     for x in top10_array:
         temp_stock_obj = get_yfhistdf(x)
         vt_all_obj.update({x: temp_stock_obj["Volume"]})
-    return render_template('index.html', top10_array=top10_array, pnorm_obj=pnorm_obj, tickers=tickers, dates=dates, yf_dates_array=yf_dates_array, pt_all_obj=pt_all_obj, vt_all_obj=vt_all_obj)
+    ts_arrays_obj = {}
+    for x in top10_array:
+        ts_arrays_obj.update({x: get_ts_arrays(x)})
+    return render_template('index.html', top10_array=top10_array, pnorm_obj=pnorm_obj, tickers=tickers, dates=dates, yf_dates_array=yf_dates_array, pt_all_obj=pt_all_obj, vt_all_obj=vt_all_obj, ts_arrays_obj=ts_arrays_obj)
 
 
 @app.route('/<string:ticker>')

@@ -138,22 +138,7 @@ def pytrend_single(ticker):
 # tweepy, pandas, re, nltk, textblob
 # Gathers tweets for a ticker and then performs sentiment analysis on the tweets with nltk and textblob.
 # Data is returned in a dictionary.
-def twitter(ticker):
-    # login stuff for Tweepy:
-    consumer_key = 'Dvkp7foIvb2EMqxFoXCqcD4YZ'
-    consumer_secret = 'gs0w56HCcSwuWJEyVKXL0ywv9ibE1R98ZomPUyDSbtl7kDy4sv'
-    access_token = '1371241350746755074-zbpTUM7DqzTxie9tJ5VOvbVYSZ1CAI'
-    access_token_secret = '9EazuwZG4XEnBR5eInRBqE1BzpEV72iJLoF8OzGzZBBnT'
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
-    api = tweepy.API(auth, wait_on_rate_limit=True)
-    # error checking
-    try:
-        api.verify_credentials()
-        print("Authentication OK")
-    except:
-        print("Error during authentication\n\n\n")
-
+def twitter(api, ticker):
     stop_words = stopwords.words('english')
 
     # Removes stop words from each tweet as well as lemmatizing the words too
