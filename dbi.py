@@ -104,12 +104,12 @@ def store_twitter():
         print(twitter(x))
 
 if __name__ == '__main__':
-    # store_stocks()
-    # store_pytrend()
-    # store_pytrend_normalized()
+    store_stocks()
+    store_pytrend()
+    store_pytrend_normalized()
     # store_twitter()
     #get_pytrend_normalized()
     #get_stock("CRTX")
     store_yfhistdf()
     #get_yfhistdf("CRTX")
-    pass
+    sleep(14400)
