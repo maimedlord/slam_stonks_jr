@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from dbi import get_top10, get_pytrend_normalized, get_stock, get_yfhistdf
+import datetime
 
 
 app = Flask(__name__)
@@ -11,12 +12,23 @@ def index():
     pnorm_obj = get_pytrend_normalized()
     tickers = list(pnorm_obj.keys())[::-1]
     dates = list(pnorm_obj.get(tickers[0]).keys())[::-1] #  BE CAREFUL OF DESCENDING/ASCENDING DATES NOT MATHCING THEIR VALUES
-    return render_template('index.html', top10_array=top10_array, pnorm_obj=pnorm_obj, tickers=tickers, dates=dates)
+    ###
+    yf_dates_array = get_yfhistdf(top10_array[0])["Date"]
+    pt_all_obj = {}
+    vt_all_obj = {}
+    for x in top10_array:
+        temp_stock_obj = get_yfhistdf(x)
+        pt_all_obj.update({x: temp_stock_obj["Close"]})
+    for x in top10_array:
+        temp_stock_obj = get_yfhistdf(x)
+        vt_all_obj.update({x: temp_stock_obj["Volume"]})
+    return render_template('index.html', top10_array=top10_array, pnorm_obj=pnorm_obj, tickers=tickers, dates=dates, yf_dates_array=yf_dates_array, pt_all_obj=pt_all_obj, vt_all_obj=vt_all_obj)
 
 
 @app.route('/<string:ticker>')
 def ticker_page(ticker):
     top10_array = get_top10()
+    # pytrend_single:
     stock_obj = get_stock(ticker)
     name = stock_obj["name"]
     price = stock_obj["price"]
@@ -24,7 +36,7 @@ def ticker_page(ticker):
     float_shorted = stock_obj["float_shorted"]
     dates = list(stock_obj["pytrend"].keys())[::-1]
     values = list(stock_obj["pytrend"].values())[::-1]
-    # stock info:
+    # stock_info:
     stock_obj = get_yfhistdf(ticker)
     yf_dates_array = stock_obj["Date"]
     yf_high_array = stock_obj["High"]

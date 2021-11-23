@@ -110,6 +110,6 @@ if __name__ == '__main__':
     # store_twitter()
     #get_pytrend_normalized()
     #get_stock("CRTX")
-    #store_yfhistdf()
-    get_yfhistdf("CRTX")
+    store_yfhistdf()
+    #get_yfhistdf("CRTX")
     pass

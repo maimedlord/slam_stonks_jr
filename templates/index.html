@@ -1,99 +1,154 @@
 {% extends "base.html" %}
 {% block title %}<title>Slam Stonks Jr.</title>{% endblock %}
 {% block main %}
-        <div class="row">
+        <div class="row text_align_center">
+            <div class="twelve columns">
+                <h2>COMPARING ALL</h2>
+            </div>
+        </div>
+        <div class="row text_align_center">
+            <div class="four columns">
+                <a href='javascript:;' onclick="show_pnorm()"><button>Google Trends</button></a>
+            </div>
+            <div class="four columns">
+                <a href='javascript:;' onclick="show_pt_all()"><button>Price Trend</button></a>
+            </div>
+            <div class="four columns">
+                <a href='javascript:;' onclick="show_vt_all()"><button>Volume Trend</button></a>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px">
             <div class="twelve columns" style="padding: 10px">
-                <canvas id="pnorm"></canvas>
+                <div id="pnorm">
+                    <canvas id="pnorm_chart"></canvas>
+                </div>
+                <div style="display: none" id="pt_all">
+                    <canvas id="pt_all_chart"></canvas>
+                </div>
+                <div style="display: none" id="vt_all">
+                    <canvas id="vt_all_chart"></canvas>
+                </div>
             </div>
         </div>
     <script>
-        const ctx = document.getElementById('pnorm');
-        const pnorm = new Chart(ctx, {
+        function show_pnorm() {
+                        var pnorm = document.getElementById("pnorm");
+                        var pt_all = document.getElementById("pt_all");
+                        var vt_all = document.getElementById("vt_all")
+                        if (pnorm.style.display === "none") {
+                            pt_all.style.display = "none";
+                            vt_all.style.display = "none";
+                            pnorm.style.display = "block";
+                        }
+                    }
+                    function show_pt_all() {
+                        var pnorm = document.getElementById("pnorm");
+                        var pt_all = document.getElementById("pt_all");
+                        var vt_all = document.getElementById("vt_all")
+                        if (pt_all.style.display === "none") {
+                            pnorm.style.display = "none";
+                            vt_all.style.display = "none";
+                            pt_all.style.display = "block";
+                        }
+                    }
+                    function show_vt_all() {
+                        var pnorm = document.getElementById("pnorm");
+                        var pt_all = document.getElementById("pt_all");
+                        var vt_all = document.getElementById("vt_all")
+                        if (vt_all.style.display === "none") {
+                            pnorm.style.display = "none";
+                            pt_all.style.display = "none";
+                            vt_all.style.display = "block";
+                        }
+                    }
+                //////////////////////////////////////////////////////
+        const atx = document.getElementById('pnorm_chart');
+        const pnorm_chart = new Chart(atx, {
             type: 'line',
             data: {
                 labels: [{% for x in dates %}"{{x}}",{% endfor %}],
                 datasets: [
                     {
-                        label: "{{ tickers[0] }}",
+                        label: "{{ top10_array[0] }}",
                         data: [{
                             x: "{{ dates[0] }}",
-                            y: {{ pnorm_obj[tickers[0]][dates[0]] }}
+                            y: {{ pnorm_obj[top10_array[0]][dates[0]] }}
                         }, {
                             x: "{{ dates[1] }}",
-                            y: {{ pnorm_obj[tickers[0]][dates[1]] }}
+                            y: {{ pnorm_obj[top10_array[0]][dates[1]] }}
                         }, {
                             x: "{{ dates[2] }}",
-                            y: {{ pnorm_obj[tickers[0]][dates[2]] }}
+                            y: {{ pnorm_obj[top10_array[0]][dates[2]] }}
                         }, {
                             x: "{{ dates[3] }}",
-                            y: {{ pnorm_obj[tickers[0]][dates[3]] }}
+                            y: {{ pnorm_obj[top10_array[0]][dates[3]] }}
                         }, {
                             x: "{{ dates[4] }}",
-                            y: {{ pnorm_obj[tickers[0]][dates[4]] }}
+                            y: {{ pnorm_obj[top10_array[0]][dates[4]] }}
                         }, {
                             x: "{{ dates[5] }}",
-                            y: {{ pnorm_obj[tickers[0]][dates[5]] }}
+                            y: {{ pnorm_obj[top10_array[0]][dates[5]] }}
                         }, {
                             x: "{{ dates[6] }}",
-                            y: {{ pnorm_obj[tickers[0]][dates[6]] }}
-                        }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[tickers[0]][dates[7]] }}}],
+                            y: {{ pnorm_obj[top10_array[0]][dates[6]] }}
+                        }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[top10_array[0]][dates[7]] }}}],
                         showLine: true,
                         fill: false,
                         borderColor: 'rgba(255, 0, 0, 1)',
                         lineTension: 0
                         },
                         {
-                        label: "{{ tickers[1] }}",
+                        label: "{{ top10_array[1] }}",
                         data: [{
                             x: "{{ dates[0] }}",
-                            y: {{ pnorm_obj[tickers[1]][dates[0]] }}
+                            y: {{ pnorm_obj[top10_array[1]][dates[0]] }}
                         }, {
                             x: "{{ dates[1] }}",
-                            y: {{ pnorm_obj[tickers[1]][dates[1]] }}
+                            y: {{ pnorm_obj[top10_array[1]][dates[1]] }}
                         }, {
                             x: "{{ dates[2] }}",
-                            y: {{ pnorm_obj[tickers[1]][dates[2]] }}
+                            y: {{ pnorm_obj[top10_array[1]][dates[2]] }}
                         }, {
                             x: "{{ dates[3] }}",
-                            y: {{ pnorm_obj[tickers[1]][dates[3]] }}
+                            y: {{ pnorm_obj[top10_array[1]][dates[3]] }}
                         }, {
                             x: "{{ dates[4] }}",
-                            y: {{ pnorm_obj[tickers[1]][dates[4]] }}
+                            y: {{ pnorm_obj[top10_array[1]][dates[4]] }}
                         }, {
                             x: "{{ dates[5] }}",
-                            y: {{ pnorm_obj[tickers[1]][dates[5]] }}
+                            y: {{ pnorm_obj[top10_array[1]][dates[5]] }}
                         }, {
                             x: "{{ dates[6] }}",
-                            y: {{ pnorm_obj[tickers[1]][dates[6]] }}
-                        }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[tickers[1]][dates[7]] }}}],
+                            y: {{ pnorm_obj[top10_array[1]][dates[6]] }}
+                        }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[top10_array[1]][dates[7]] }}}],
                         showLine: true,
                         fill: false,
                         borderColor: 'rgba(255, 128, 0, 1)',
                         lineTension: 0
                         },
                         {
-                        label: "{{ tickers[2] }}",
+                        label: "{{ top10_array[2] }}",
                         data: [{
                             x: "{{ dates[0] }}",
-                            y: {{ pnorm_obj[tickers[2]][dates[0]] }}
+                            y: {{ pnorm_obj[top10_array[2]][dates[0]] }}
                         }, {
                             x: "{{ dates[1] }}",
-                            y: {{ pnorm_obj[tickers[2]][dates[1]] }}
+                            y: {{ pnorm_obj[top10_array[2]][dates[1]] }}
                         }, {
                             x: "{{ dates[2] }}",
-                            y: {{ pnorm_obj[tickers[2]][dates[2]] }}
+                            y: {{ pnorm_obj[top10_array[2]][dates[2]] }}
                         }, {
                             x: "{{ dates[3] }}",
-                            y: {{ pnorm_obj[tickers[2]][dates[3]] }}
+                            y: {{ pnorm_obj[top10_array[2]][dates[3]] }}
                         }, {
                             x: "{{ dates[4] }}",
-                            y: {{ pnorm_obj[tickers[2]][dates[4]] }}
+                            y: {{ pnorm_obj[top10_array[2]][dates[4]] }}
                         }, {
                             x: "{{ dates[5] }}",
-                            y: {{ pnorm_obj[tickers[2]][dates[5]] }}
+                            y: {{ pnorm_obj[top10_array[2]][dates[5]] }}
                         }, {
                             x: "{{ dates[6] }}",
-                            y: {{ pnorm_obj[tickers[2]][dates[6]] }}
+                            y: {{ pnorm_obj[top10_array[2]][dates[6]] }}
                         }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[tickers[2]][dates[7]] }}}],
                         showLine: true,
                         fill: false,
@@ -101,203 +156,203 @@
                         lineTension: 0
                         },
                         {
-                        label: "{{ tickers[3] }}",
+                        label: "{{ top10_array[3] }}",
                         data: [{
                             x: "{{ dates[0] }}",
-                            y: {{ pnorm_obj[tickers[3]][dates[0]] }}
+                            y: {{ pnorm_obj[top10_array[3]][dates[0]] }}
                         }, {
                             x: "{{ dates[1] }}",
-                            y: {{ pnorm_obj[tickers[3]][dates[1]] }}
+                            y: {{ pnorm_obj[top10_array[3]][dates[1]] }}
                         }, {
                             x: "{{ dates[2] }}",
-                            y: {{ pnorm_obj[tickers[3]][dates[2]] }}
+                            y: {{ pnorm_obj[top10_array[3]][dates[2]] }}
                         }, {
                             x: "{{ dates[3] }}",
-                            y: {{ pnorm_obj[tickers[3]][dates[3]] }}
+                            y: {{ pnorm_obj[top10_array[3]][dates[3]] }}
                         }, {
                             x: "{{ dates[4] }}",
-                            y: {{ pnorm_obj[tickers[3]][dates[4]] }}
+                            y: {{ pnorm_obj[top10_array[3]][dates[4]] }}
                         }, {
                             x: "{{ dates[5] }}",
-                            y: {{ pnorm_obj[tickers[3]][dates[5]] }}
+                            y: {{ pnorm_obj[top10_array[3]][dates[5]] }}
                         }, {
                             x: "{{ dates[6] }}",
-                            y: {{ pnorm_obj[tickers[3]][dates[6]] }}
-                        }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[tickers[3]][dates[7]] }}}],
+                            y: {{ pnorm_obj[top10_array[3]][dates[6]] }}
+                        }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[top10_array[3]][dates[7]] }}}],
                         showLine: true,
                         fill: false,
                         borderColor: 'rgba(0, 255, 0, 1)',
                         lineTension: 0
                         },
                         {
-                        label: "{{ tickers[4] }}",
+                        label: "{{ top10_array[4] }}",
                         data: [{
                             x: "{{ dates[0] }}",
-                            y: {{ pnorm_obj[tickers[4]][dates[0]] }}
+                            y: {{ pnorm_obj[top10_array[4]][dates[0]] }}
                         }, {
                             x: "{{ dates[1] }}",
-                            y: {{ pnorm_obj[tickers[4]][dates[1]] }}
+                            y: {{ pnorm_obj[top10_array[4]][dates[1]] }}
                         }, {
                             x: "{{ dates[2] }}",
-                            y: {{ pnorm_obj[tickers[4]][dates[2]] }}
+                            y: {{ pnorm_obj[top10_array[4]][dates[2]] }}
                         }, {
                             x: "{{ dates[3] }}",
-                            y: {{ pnorm_obj[tickers[4]][dates[3]] }}
+                            y: {{ pnorm_obj[top10_array[4]][dates[3]] }}
                         }, {
                             x: "{{ dates[4] }}",
-                            y: {{ pnorm_obj[tickers[4]][dates[4]] }}
+                            y: {{ pnorm_obj[top10_array[4]][dates[4]] }}
                         }, {
                             x: "{{ dates[5] }}",
-                            y: {{ pnorm_obj[tickers[4]][dates[5]] }}
+                            y: {{ pnorm_obj[top10_array[4]][dates[5]] }}
                         }, {
                             x: "{{ dates[6] }}",
-                            y: {{ pnorm_obj[tickers[4]][dates[6]] }}
-                        }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[tickers[4]][dates[7]] }}}],
+                            y: {{ pnorm_obj[top10_array[4]][dates[6]] }}
+                        }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[top10_array[4]][dates[7]] }}}],
                         showLine: true,
                         fill: false,
                         borderColor: 'rgba(0, 255, 255, 1)',
                         lineTension: 0
                         },
                         {
-                        label: "{{ tickers[5] }}",
+                        label: "{{ top10_array[5] }}",
                         data: [{
                             x: "{{ dates[0] }}",
-                            y: {{ pnorm_obj[tickers[5]][dates[0]] }}
+                            y: {{ pnorm_obj[top10_array[5]][dates[0]] }}
                         }, {
                             x: "{{ dates[1] }}",
-                            y: {{ pnorm_obj[tickers[5]][dates[1]] }}
+                            y: {{ pnorm_obj[top10_array[5]][dates[1]] }}
                         }, {
                             x: "{{ dates[2] }}",
-                            y: {{ pnorm_obj[tickers[5]][dates[2]] }}
+                            y: {{ pnorm_obj[top10_array[5]][dates[2]] }}
                         }, {
                             x: "{{ dates[3] }}",
-                            y: {{ pnorm_obj[tickers[5]][dates[3]] }}
+                            y: {{ pnorm_obj[top10_array[5]][dates[3]] }}
                         }, {
                             x: "{{ dates[4] }}",
-                            y: {{ pnorm_obj[tickers[5]][dates[4]] }}
+                            y: {{ pnorm_obj[top10_array[5]][dates[4]] }}
                         }, {
                             x: "{{ dates[5] }}",
-                            y: {{ pnorm_obj[tickers[5]][dates[5]] }}
+                            y: {{ pnorm_obj[top10_array[5]][dates[5]] }}
                         }, {
                             x: "{{ dates[6] }}",
-                            y: {{ pnorm_obj[tickers[5]][dates[6]] }}
-                        }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[tickers[5]][dates[7]] }}}],
+                            y: {{ pnorm_obj[top10_array[5]][dates[6]] }}
+                        }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[top10_array[5]][dates[7]] }}}],
                         showLine: true,
                         fill: false,
                         borderColor: 'rgba(0, 128, 255, 1)',
                         lineTension: 0
                         },
                         {
-                        label: "{{ tickers[6] }}",
+                        label: "{{ top10_array[6] }}",
                         data: [{
                             x: "{{ dates[0] }}",
-                            y: {{ pnorm_obj[tickers[6]][dates[0]] }}
+                            y: {{ pnorm_obj[top10_array[6]][dates[0]] }}
                         }, {
                             x: "{{ dates[1] }}",
-                            y: {{ pnorm_obj[tickers[6]][dates[1]] }}
+                            y: {{ pnorm_obj[top10_array[6]][dates[1]] }}
                         }, {
                             x: "{{ dates[2] }}",
-                            y: {{ pnorm_obj[tickers[6]][dates[2]] }}
+                            y: {{ pnorm_obj[top10_array[6]][dates[2]] }}
                         }, {
                             x: "{{ dates[3] }}",
-                            y: {{ pnorm_obj[tickers[6]][dates[3]] }}
+                            y: {{ pnorm_obj[top10_array[6]][dates[3]] }}
                         }, {
                             x: "{{ dates[4] }}",
-                            y: {{ pnorm_obj[tickers[6]][dates[4]] }}
+                            y: {{ pnorm_obj[top10_array[6]][dates[4]] }}
                         }, {
                             x: "{{ dates[5] }}",
-                            y: {{ pnorm_obj[tickers[6]][dates[5]] }}
+                            y: {{ pnorm_obj[top10_array[6]][dates[5]] }}
                         }, {
                             x: "{{ dates[6] }}",
-                            y: {{ pnorm_obj[tickers[6]][dates[6]] }}
-                        }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[tickers[6]][dates[7]] }}}],
+                            y: {{ pnorm_obj[top10_array[6]][dates[6]] }}
+                        }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[top10_array[6]][dates[7]] }}}],
                         showLine: true,
                         fill: false,
                         borderColor: 'rgba(0, 0, 255, 1)',
                         lineTension: 0
                         },
                         {
-                        label: "{{ tickers[7] }}",
+                        label: "{{ top10_array[7] }}",
                         data: [{
                             x: "{{ dates[0] }}",
-                            y: {{ pnorm_obj[tickers[7]][dates[0]] }}
+                            y: {{ pnorm_obj[top10_array[7]][dates[0]] }}
                         }, {
                             x: "{{ dates[1] }}",
-                            y: {{ pnorm_obj[tickers[7]][dates[1]] }}
+                            y: {{ pnorm_obj[top10_array[7]][dates[1]] }}
                         }, {
                             x: "{{ dates[2] }}",
-                            y: {{ pnorm_obj[tickers[7]][dates[2]] }}
+                            y: {{ pnorm_obj[top10_array[7]][dates[2]] }}
                         }, {
                             x: "{{ dates[3] }}",
-                            y: {{ pnorm_obj[tickers[7]][dates[3]] }}
+                            y: {{ pnorm_obj[top10_array[7]][dates[3]] }}
                         }, {
                             x: "{{ dates[4] }}",
-                            y: {{ pnorm_obj[tickers[7]][dates[4]] }}
+                            y: {{ pnorm_obj[top10_array[7]][dates[4]] }}
                         }, {
                             x: "{{ dates[5] }}",
-                            y: {{ pnorm_obj[tickers[7]][dates[5]] }}
+                            y: {{ pnorm_obj[top10_array[7]][dates[5]] }}
                         }, {
                             x: "{{ dates[6] }}",
-                            y: {{ pnorm_obj[tickers[7]][dates[6]] }}
-                        }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[tickers[7]][dates[7]] }}}],
+                            y: {{ pnorm_obj[top10_array[7]][dates[6]] }}
+                        }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[top10_array[7]][dates[7]] }}}],
                         showLine: true,
                         fill: false,
                         borderColor: 'rgba(127, 0, 255, 1)',
                         lineTension: 0
                         },
                         {
-                        label: "{{ tickers[8] }}",
+                        label: "{{ top10_array[8] }}",
                         data: [{
                             x: "{{ dates[0] }}",
-                            y: {{ pnorm_obj[tickers[8]][dates[0]] }}
+                            y: {{ pnorm_obj[top10_array[8]][dates[0]] }}
                         }, {
                             x: "{{ dates[1] }}",
-                            y: {{ pnorm_obj[tickers[8]][dates[1]] }}
+                            y: {{ pnorm_obj[top10_array[8]][dates[1]] }}
                         }, {
                             x: "{{ dates[2] }}",
-                            y: {{ pnorm_obj[tickers[8]][dates[2]] }}
+                            y: {{ pnorm_obj[top10_array[8]][dates[2]] }}
                         }, {
                             x: "{{ dates[3] }}",
-                            y: {{ pnorm_obj[tickers[8]][dates[3]] }}
+                            y: {{ pnorm_obj[top10_array[8]][dates[3]] }}
                         }, {
                             x: "{{ dates[4] }}",
-                            y: {{ pnorm_obj[tickers[8]][dates[4]] }}
+                            y: {{ pnorm_obj[top10_array[8]][dates[4]] }}
                         }, {
                             x: "{{ dates[5] }}",
-                            y: {{ pnorm_obj[tickers[8]][dates[5]] }}
+                            y: {{ pnorm_obj[top10_array[8]][dates[5]] }}
                         }, {
                             x: "{{ dates[6] }}",
-                            y: {{ pnorm_obj[tickers[8]][dates[6]] }}
-                        }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[tickers[8]][dates[7]] }}}],
+                            y: {{ pnorm_obj[top10_array[8]][dates[6]] }}
+                        }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[top10_array[8]][dates[7]] }}}],
                         showLine: true,
                         fill: false,
                         borderColor: 'rgba(255, 0, 127, 1)',
                         lineTension: 0
                         },
                         {
-                        label: "{{ tickers[9] }}",
+                        label: "{{ top10_array[9] }}",
                         data: [{
                             x: "{{ dates[0] }}",
-                            y: {{ pnorm_obj[tickers[9]][dates[0]] }}
+                            y: {{ pnorm_obj[top10_array[9]][dates[0]] }}
                         }, {
                             x: "{{ dates[1] }}",
-                            y: {{ pnorm_obj[tickers[9]][dates[1]] }}
+                            y: {{ pnorm_obj[top10_array[9]][dates[1]] }}
                         }, {
                             x: "{{ dates[2] }}",
-                            y: {{ pnorm_obj[tickers[9]][dates[2]] }}
+                            y: {{ pnorm_obj[top10_array[9]][dates[2]] }}
                         }, {
                             x: "{{ dates[3] }}",
-                            y: {{ pnorm_obj[tickers[9]][dates[3]] }}
+                            y: {{ pnorm_obj[top10_array[9]][dates[3]] }}
                         }, {
                             x: "{{ dates[4] }}",
-                            y: {{ pnorm_obj[tickers[9]][dates[4]] }}
+                            y: {{ pnorm_obj[top10_array[9]][dates[4]] }}
                         }, {
                             x: "{{ dates[5] }}",
-                            y: {{ pnorm_obj[tickers[9]][dates[5]] }}
+                            y: {{ pnorm_obj[top10_array[9]][dates[5]] }}
                         }, {
                             x: "{{ dates[6] }}",
-                            y: {{ pnorm_obj[tickers[9]][dates[6]] }}
-                        }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[tickers[9]][dates[7]] }}}],
+                            y: {{ pnorm_obj[top10_array[9]][dates[6]] }}
+                        }, {x: "{{ dates[7] }}", y: {{ pnorm_obj[top10_array[9]][dates[7]] }}}],
                         showLine: true,
                         fill: false,
                         borderColor: 'rgba(127, 127, 127, 127)',
@@ -327,16 +382,334 @@
                             stepSize: 20,
                             suggestedMax: 100,
                             fontColor: 'white',
-                        }
+                        },
                     }],
                     xAxes: [{
                         ticks: {
                             autoSkip: false,
                             fontColor: 'white',
-                        }
-                    }]
+                        },
+                    }],
                 },
-            }
+            },
+        });
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        const ptx = document.getElementById('pt_all_chart');
+        const pt_all_chart = new Chart(ptx, {
+            type: 'line',
+            data: {
+                labels: [{% for x in yf_dates_array %}"{{x}}.".substr(0, 10),{% endfor %}],
+                datasets: [
+                    {
+                        label: "{{top10_array[0]}}",
+                        data: [{% for value in pt_all_obj[top10_array[0]] %}
+                                {{value}},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(255, 0, 0, 1)',
+                        lineTension: 0,
+                    },
+                    {
+                        label: "{{ top10_array[1] }}",
+                        data: [
+                            {% for value in pt_all_obj[top10_array[1]] %}
+                                {{ value }},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(255, 128, 0, 1)',
+                        lineTension: 0,
+                    },
+                    {
+                        label: "{{ top10_array[2] }}",
+                        data: [
+                            {% for value in pt_all_obj[top10_array[2]] %}
+                                {{ value }},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(255, 255, 0, 1)',
+                        lineTension: 0,
+                    },
+                    {
+                        label: "{{ top10_array[3] }}",
+                        data: [
+                            {% for value in pt_all_obj[top10_array[3]] %}
+                                {{ value }},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(0, 255, 0, 1)',
+                        lineTension: 0,
+                    },
+                    {
+                        label: "{{ top10_array[4] }}",
+                        data: [
+                            {% for value in pt_all_obj[top10_array[4]] %}
+                                {{ value }},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(0, 255, 255, 1)',
+                        lineTension: 0,
+                    },
+                    {
+                        label: "{{ top10_array[5] }}",
+                        data: [
+                            {% for value in pt_all_obj[top10_array[5]] %}
+                                {{ value }},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(0, 128, 255, 1)',
+                        lineTension: 0,
+                    },
+                    {
+                        label: "{{ top10_array[6] }}",
+                        data: [
+                            {% for value in pt_all_obj[top10_array[6]] %}
+                                {{ value }},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(0, 0, 255, 1)',
+                        lineTension: 0,
+                    },
+                    {
+                        label: "{{ top10_array[7] }}",
+                        data: [
+                            {% for value in pt_all_obj[top10_array[7]] %}
+                                {{ value }},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(127, 0, 255, 1)',
+                        lineTension: 0,
+                    },
+                    {
+                        label: "{{ top10_array[8] }}",
+                        data: [
+                            {% for value in pt_all_obj[top10_array[8]] %}
+                                {{ value }},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(255, 0, 127, 1)',
+                        lineTension: 0,
+                    },
+                {
+                        label: "{{ top10_array[9] }}",
+                        data: [
+                            {% for value in pt_all_obj[top10_array[9]] %}
+                                {{ value }},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(127, 127, 127, 127)',
+                        lineTension: 0,
+                    },
+                ],
+            },
+            options: {
+                tooltips: {
+                    mode: 'index',
+                    intersect: true,
+                },
+                legend: {
+                    labels: {
+                        fontColor: 'white' //set your desired color
+                    }
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            autoSkip: false,
+                            beginAtZero: true,
+                            fontColor: 'white',
+                        },
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            autoSkip: false,
+                            fontColor: 'white',
+                        },
+                    }],
+                },
+            },
+        });
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        const vtx = document.getElementById('vt_all_chart');
+        const vt_all_chart = new Chart(vtx, {
+            type: 'line',
+            data: {
+                labels: [{% for x in yf_dates_array %}"{{x}}.".substr(0, 10),{% endfor %}],
+                datasets: [
+                    {
+                        label: "{{top10_array[0]}}",
+                        data: [{% for value in vt_all_obj[top10_array[0]] %}
+                                {{value}},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(255, 0, 0, 1)',
+                        lineTension: 0,
+                    },
+                    {
+                        label: "{{ top10_array[1] }}",
+                        data: [
+                            {% for value in vt_all_obj[top10_array[1]] %}
+                                {{ value }},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(255, 128, 0, 1)',
+                        lineTension: 0,
+                    },
+                    {
+                        label: "{{ top10_array[2] }}",
+                        data: [
+                            {% for value in vt_all_obj[top10_array[2]] %}
+                                {{ value }},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(255, 255, 0, 1)',
+                        lineTension: 0,
+                    },
+                    {
+                        label: "{{ top10_array[3] }}",
+                        data: [
+                            {% for value in vt_all_obj[top10_array[3]] %}
+                                {{ value }},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(0, 255, 0, 1)',
+                        lineTension: 0,
+                    },
+                    {
+                        label: "{{ top10_array[4] }}",
+                        data: [
+                            {% for value in vt_all_obj[top10_array[4]] %}
+                                {{ value }},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(0, 255, 255, 1)',
+                        lineTension: 0,
+                    },
+                    {
+                        label: "{{ top10_array[5] }}",
+                        data: [
+                            {% for value in vt_all_obj[top10_array[5]] %}
+                                {{ value }},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(0, 128, 255, 1)',
+                        lineTension: 0,
+                    },
+                    {
+                        label: "{{ top10_array[6] }}",
+                        data: [
+                            {% for value in vt_all_obj[top10_array[6]] %}
+                                {{ value }},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(0, 0, 255, 1)',
+                        lineTension: 0,
+                    },
+                    {
+                        label: "{{ top10_array[7] }}",
+                        data: [
+                            {% for value in vt_all_obj[top10_array[7]] %}
+                                {{ value }},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(127, 0, 255, 1)',
+                        lineTension: 0,
+                    },
+                    {
+                        label: "{{ top10_array[8] }}",
+                        data: [
+                            {% for value in vt_all_obj[top10_array[8]] %}
+                                {{ value }},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(255, 0, 127, 1)',
+                        lineTension: 0,
+                    },
+                {
+                        label: "{{ top10_array[9] }}",
+                        data: [
+                            {% for value in vt_all_obj[top10_array[9]] %}
+                                {{ value }},
+                            {% endfor %}
+                        ],
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(127, 127, 127, 127)',
+                        lineTension: 0,
+                    },
+                ],
+            },
+            options: {
+                tooltips: {
+                    mode: 'index',
+                    intersect: true,
+                },
+                legend: {
+                    labels: {
+                        fontColor: 'white' //set your desired color
+                    }
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            autoSkip: false,
+                            beginAtZero: true,
+                            fontColor: 'white',
+                        },
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            autoSkip: false,
+                            fontColor: 'white',
+                        },
+                    }],
+                },
+            },
         });
     </script>
 {% endblock %}
