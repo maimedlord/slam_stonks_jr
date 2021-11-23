@@ -8,7 +8,7 @@
         </div>
         <div class="row text_align_center">
             <div class="four columns">
-                <a href='javascript:;' onclick="show_pnorm()"><button>Google Trends</button></a>
+                <a href='javascript:;' onclick="show_pnorm()"><button id="button_focus" class="button_prep">Google Trends</button></a>
             </div>
             <div class="four columns">
                 <a href='javascript:;' onclick="show_pt_all()"><button>Price Trend</button></a>
@@ -32,36 +32,40 @@
         </div>
     <script>
         function show_pnorm() {
-                        var pnorm = document.getElementById("pnorm");
-                        var pt_all = document.getElementById("pt_all");
-                        var vt_all = document.getElementById("vt_all")
-                        if (pnorm.style.display === "none") {
-                            pt_all.style.display = "none";
-                            vt_all.style.display = "none";
-                            pnorm.style.display = "block";
-                        }
-                    }
-                    function show_pt_all() {
-                        var pnorm = document.getElementById("pnorm");
-                        var pt_all = document.getElementById("pt_all");
-                        var vt_all = document.getElementById("vt_all")
-                        if (pt_all.style.display === "none") {
-                            pnorm.style.display = "none";
-                            vt_all.style.display = "none";
-                            pt_all.style.display = "block";
-                        }
-                    }
-                    function show_vt_all() {
-                        var pnorm = document.getElementById("pnorm");
-                        var pt_all = document.getElementById("pt_all");
-                        var vt_all = document.getElementById("vt_all")
-                        if (vt_all.style.display === "none") {
-                            pnorm.style.display = "none";
-                            pt_all.style.display = "none";
-                            vt_all.style.display = "block";
-                        }
-                    }
-                //////////////////////////////////////////////////////
+            var pnorm = document.getElementById("pnorm");
+            var pt_all = document.getElementById("pt_all");
+            var vt_all = document.getElementById("vt_all")
+            if (pnorm.style.display === "none") {
+                pt_all.style.display = "none";
+                vt_all.style.display = "none";
+                pnorm.style.display = "block";
+            }
+        }
+        function show_pt_all() {
+            var pnorm = document.getElementById("pnorm");
+            var pt_all = document.getElementById("pt_all");
+            var vt_all = document.getElementById("vt_all");
+            var button = document.getElementById("button_focus");
+            if (pt_all.style.display === "none") {
+                pnorm.style.display = "none";
+                vt_all.style.display = "none";
+                pt_all.style.display = "block";
+                button.className = "button_after";
+            }
+        }
+        function show_vt_all() {
+            var pnorm = document.getElementById("pnorm");
+            var pt_all = document.getElementById("pt_all");
+            var vt_all = document.getElementById("vt_all");
+            var button = document.getElementById("button_focus");
+            if (vt_all.style.display === "none") {
+                pnorm.style.display = "none";
+                pt_all.style.display = "none";
+                vt_all.style.display = "block";
+                button.className = "button_after";
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         const atx = document.getElementById('pnorm_chart');
         const pnorm_chart = new Chart(atx, {
             type: 'line',
