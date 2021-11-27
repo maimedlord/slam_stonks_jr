@@ -69,3 +69,8 @@
 .text_align_center {
     text-align: center;
 }
+.wip {
+    margin: auto;
+    text-align: center;
+    color: gold;
+}
